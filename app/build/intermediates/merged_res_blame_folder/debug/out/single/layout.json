@@ -1,0 +1,22 @@
+[
+    {
+        "merged": "com.android.pabloburga.app-mergeDebugResources-52:/layout/fragment_deleted.xml",
+        "source": "com.android.pabloburga.app-main-55:/layout/fragment_deleted.xml"
+    },
+    {
+        "merged": "com.android.pabloburga.app-mergeDebugResources-52:/layout/fragment_recover.xml",
+        "source": "com.android.pabloburga.app-main-55:/layout/fragment_recover.xml"
+    },
+    {
+        "merged": "com.android.pabloburga.app-mergeDebugResources-52:/layout/fragment_verification.xml",
+        "source": "com.android.pabloburga.app-main-55:/layout/fragment_verification.xml"
+    },
+    {
+        "merged": "com.android.pabloburga.app-mergeDebugResources-52:/layout/fragment_login.xml",
+        "source": "com.android.pabloburga.app-main-55:/layout/fragment_login.xml"
+    },
+    {
+        "merged": "com.android.pabloburga.app-mergeDebugResources-52:/layout/activity_main.xml",
+        "source": "com.android.pabloburga.app-main-55:/layout/activity_main.xml"
+    }
+]
