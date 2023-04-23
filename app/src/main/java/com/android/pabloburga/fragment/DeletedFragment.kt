@@ -35,8 +35,7 @@ class DeletedFragment : Fragment() {
 
     private fun deleteUser() = with(binding) {
         btnDelete.setOnClickListener {
-            val user = firebaseAuth.currentUser
-            user?.delete()
+            firebaseAuth.currentUser?.delete()
                 ?.addOnCompleteListener { task ->
                     val message = if (task.isSuccessful) {
                         firebaseAuth.signOut()

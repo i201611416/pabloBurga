@@ -1,6 +1,7 @@
 package com.android.pabloburga
 
 import android.os.Bundle
+import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.android.pabloburga.databinding.ActivityMainBinding
@@ -27,16 +28,20 @@ class MainActivity : AppCompatActivity() {
         navigationFragment(LoginFragment())
         binding.setOnItemSelectedListener()
         binding.userSession()
+        setSupportActionBar(binding.myToolbar)
+        binding.signOut()
     }
 
-    private fun ActivityMainBinding.userSession() = with(this.navigationBottom.menu){
+    private fun ActivityMainBinding.userSession() = with(this.navigationBottom.menu) {
         firebaseAuth.addAuthStateListener { firebaseAuth ->
             findItem(R.id.deleted_account).isEnabled = firebaseAuth.currentUser != null
             findItem(R.id.verification_account).isEnabled = firebaseAuth.currentUser != null
-            if(firebaseAuth.currentUser == null){
+            findItem(R.id.recover_account).isEnabled = firebaseAuth.currentUser == null
+            if (firebaseAuth.currentUser == null) {
                 navigationBottom.selectedItemId = R.id.login_account
                 navigationFragment(LoginFragment())
                 toast("Inicia Sesión para activar la opción de eliminar y verificar")
+                myToolbar.menu.clear()
             }
         }
     }
@@ -62,6 +67,30 @@ class MainActivity : AppCompatActivity() {
             } ?: run { false }
         }
     }
+
+    private fun ActivityMainBinding.signOut() {
+        myToolbar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.action_sign_out -> {
+                    // Cerrar sesión del usuario
+                    firebaseAuth.signOut()
+                    true
+                }
+                else -> false
+            }
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_toolbar, menu)
+        val optionsItem = menu.findItem(R.id.action_sign_out)
+        optionsItem.setOnMenuItemClickListener {
+            firebaseAuth.signOut()
+            true
+        }
+        return true
+    }
+
 
     override fun onDestroy() {
         super.onDestroy()

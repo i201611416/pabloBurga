@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.android.pabloburga.databinding.FragmentVerificationBinding
 import com.android.pabloburga.toast
-import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -31,26 +30,31 @@ class VerificationFragment : Fragment() {
         return _binding?.root
     }
 
-    private fun initVerification() {
-        val user = firebaseAuth.currentUser
-        user?.sendEmailVerification()?.addOnCompleteListener { task ->
-            val message =
-                if (task.isSuccessful) "El mensaje de verificacion ya fue enviado a su correo"
-                else "El mensaje ya fue enviado a su correo"
-            requireContext().toast(message)
+    private fun initVerification() = with(binding) {
+        if (firebaseAuth.currentUser?.isEmailVerified == true) {
+            requireContext().toast("El correo electrónico del usuario ya ha sido verificado")
+            btnVerification.isEnabled = false
+        } else {
+            firebaseAuth.currentUser?.sendEmailVerification()?.addOnCompleteListener { task ->
+                val message =
+                    if (task.isSuccessful) "El mensaje de verificacion ya fue enviado a su correo"
+                    else "El mensaje ya fue enviado a su correo"
+                requireContext().toast(message)
+            }
+            btnVerification.isEnabled = true
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initVerification()
-        binding.btnVerification.setOnClickListener {
-            val user = firebaseAuth.currentUser
-            val message =
-                if (user?.isEmailVerified == true) "El correo electrónico del usuario ya ha sido verificado"
-                else "El correo electrónico del usuario aún no ha sido verificado"
-            requireContext().toast(message)
+        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+            super.onViewCreated(view, savedInstanceState)
+            initVerification()
+            binding.btnVerification.setOnClickListener {
+                val user = firebaseAuth.currentUser
+                val message =
+                    if (user?.isEmailVerified == true) "El correo electrónico del usuario ya ha sido verificado"
+                    else "El correo electrónico del usuario aún no ha sido verificado"
+                requireContext().toast(message)
+            }
         }
-    }
 
-}
+    }
