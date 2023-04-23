@@ -34,9 +34,19 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         currentUser()
         binding.btnLogin.setOnClickListener {
-            loginUser()
-            verificationUser()
+            validationFields {
+                loginUser()
+                verificationUser()
+            }
         }
+
+    }
+
+    private fun validationFields(onFields: () -> Unit) = with(binding) {
+        val email = edtEmail.text.toString().trim()
+        val password = edtPwd.text.toString().trim()
+        if (email.isNotEmpty() && password.isNotEmpty()) onFields()
+        else requireContext().toast("Campos no pueden estar vacios")
     }
 
     private fun verificationUser() = with(binding) {
@@ -44,7 +54,7 @@ class LoginFragment : Fragment() {
             firebaseAuth.currentUser?.let {
                 lnlContainerLogin.visibility = View.GONE
                 lnlLogin.visibility = View.VISIBLE
-                txtEmail.text =it.email
+                txtEmail.text = it.email
             } ?: run {
                 lnlLogin.visibility = View.GONE
                 lnlContainerLogin.visibility = View.VISIBLE
@@ -54,11 +64,11 @@ class LoginFragment : Fragment() {
 
     }
 
-    private fun currentUser()= with(binding){
+    private fun currentUser() = with(binding) {
         firebaseAuth.currentUser?.let {
             lnlContainerLogin.visibility = View.GONE
             lnlLogin.visibility = View.VISIBLE
-            txtEmail.text =it.email
+            txtEmail.text = it.email
         } ?: run {
             lnlLogin.visibility = View.GONE
             lnlContainerLogin.visibility = View.VISIBLE

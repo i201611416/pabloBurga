@@ -33,15 +33,23 @@ class RecoverFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         with(binding) {
             btnRecover.setOnClickListener {
-                firebaseAuth.sendPasswordResetEmail(edtEmail.text.toString())
-                    .addOnCompleteListener { task ->
-                        val message =
-                            if (task.isSuccessful) "Correo electrónico de recuperación enviado"
-                            else "Error al enviar el correo electrónico de recuperación"
-                        requireContext().toast(message)
-                    }
+                validationFields() {
+                    firebaseAuth.sendPasswordResetEmail(edtEmail.text.toString())
+                        .addOnCompleteListener { task ->
+                            val message =
+                                if (task.isSuccessful) "Correo electrónico de recuperación enviado"
+                                else "Error al enviar el correo electrónico de recuperación"
+                            requireContext().toast(message)
+                        }
+                }
             }
         }
+    }
+
+    private fun validationFields(onFields: () -> Unit) = with(binding) {
+        val email = edtEmail.text.toString().trim()
+        if (email.isNotEmpty()) onFields()
+        else requireContext().toast("Email no puede estar vacío")
     }
 
 }
