@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "933836076115",
+    "project_id": "pabloburga-3938f",
+    "storage_bucket": "pabloburga-3938f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:933836076115:android:7633ddae2dba3552b982a6",
+        "android_client_info": {
+          "package_name": "com.android.pabloburga"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "933836076115-d7cri5tugpr51fgcjnfldi30pd1okfng.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvuI241SOgRZBUUFqYBfdBpGOArx0DE-Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "933836076115-d7cri5tugpr51fgcjnfldi30pd1okfng.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
