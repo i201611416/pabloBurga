@@ -88,7 +88,7 @@ class LoginFragment : Fragment() {
                     ).addOnCompleteListener { tasks ->
                         val message =
                             if (tasks.isSuccessful) "Usuario no encontrado, registro exitoso"
-                            else "Error de login"
+                            else "Correo y/o clave incorrecta"
                         requireContext().toast(message)
                     }
                 }

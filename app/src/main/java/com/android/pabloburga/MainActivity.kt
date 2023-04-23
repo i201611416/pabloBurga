@@ -27,9 +27,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         navigationFragment(LoginFragment())
         binding.setOnItemSelectedListener()
-        binding.userSession()
         setSupportActionBar(binding.myToolbar)
         binding.signOut()
+        binding.userSession()
     }
 
     private fun ActivityMainBinding.userSession() = with(this.navigationBottom.menu) {
@@ -41,7 +41,6 @@ class MainActivity : AppCompatActivity() {
                 navigationBottom.selectedItemId = R.id.login_account
                 navigationFragment(LoginFragment())
                 toast("Inicia Sesión para activar la opción de eliminar y verificar")
-                myToolbar.menu.clear()
             }
         }
     }
@@ -84,6 +83,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_toolbar, menu)
         val optionsItem = menu.findItem(R.id.action_sign_out)
+        firebaseAuth.addAuthStateListener{ optionsItem.isVisible = it.currentUser != null }
         optionsItem.setOnMenuItemClickListener {
             firebaseAuth.signOut()
             true
